@@ -642,6 +642,106 @@ const scaleX = useSpring(
     </motion.div>
 </motion.section>
 
+
+
+
+        {/* TECH STACK */}
+<motion.section
+  variants={premiumReveal}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  className="max-w-7xl mx-auto px-6 py-24"
+>
+  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mb-16">
+    <div>
+      <p className="uppercase tracking-[0.35em] text-cyan-300 text-xs md:text-sm mb-6">
+        Tech Stack
+      </p>
+
+      <h2 className="text-4xl md:text-6xl font-black leading-[0.95]">
+        Tools &
+        <br />
+        Technologies
+      </h2>
+    </div>
+
+    <p className={`${mutedText} max-w-xl text-lg leading-relaxed`}>
+      Technologies and platforms I use to build scalable workflow systems,
+      cinematic experiences, and modern interfaces.
+    </p>
+  </div>
+
+  <div className="flex flex-wrap gap-5">
+    {[
+      "ServiceNow",
+      "JavaScript",
+      "React",
+      "TypeScript",
+      "Flow Designer",
+      "REST APIs",
+      "Tailwind CSS",
+      "Framer Motion",
+      "HTML5",
+      "CSS3",
+      "GitHub",
+      "UI/UX Design",
+    ].map((tech, index) => (
+      <motion.div
+        key={tech}
+        initial={{
+          opacity: 0,
+          y: 40,
+          scale: 0.8,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        }}
+        transition={{
+          delay: index * 0.05,
+          duration: 0.5,
+        }}
+        viewport={{ once: true }}
+        whileHover={{
+          scale: 1.08,
+          y: -6,
+        }}
+        className={`group relative overflow-hidden px-8 py-5 rounded-2xl border backdrop-blur-xl transition-all duration-500 cursor-pointer ${
+          darkMode
+            ? "bg-white/[0.03] border-white/10 hover:bg-cyan-500/10"
+            : "bg-black/[0.03] border-black/10 hover:bg-cyan-500/10"
+        }`}
+      >
+        {/* GLOW */}
+        <div className="absolute inset-0 bg-cyan-400/0 group-hover:bg-cyan-400/10 transition-all duration-500" />
+
+        {/* FLOATING DOT */}
+        <motion.div
+          animate={{
+            y: [0, -6, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            delay: index * 0.2,
+          }}
+          className="absolute top-3 right-3 w-2 h-2 rounded-full bg-cyan-300 shadow-[0_0_20px_#22d3ee]"
+        />
+
+        <span className="relative z-10 font-semibold text-lg">
+          {tech}
+        </span>
+      </motion.div>
+    ))}
+  </div>
+</motion.section>
+
+
+
+
+
       {/* PROJECTS */}
       <motion.section
         id="projects"
