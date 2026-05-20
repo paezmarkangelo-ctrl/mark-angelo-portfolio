@@ -189,7 +189,21 @@ const scaleX = useSpring(
 
   if (loading) {
     return (
-      <div className="fixed inset-0 bg-black flex items-center justify-center z-[99999]">
+      <div className="fixed inset-0 bg-black flex items-center justify-center z-[99999] overflow-hidden">
+        {/* BACKGROUND GLOW */}
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.5, 0.2],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute w-[500px] h-[500px] rounded-full bg-cyan-500/10 blur-[120px]"
+        />
+  
         <motion.div
           initial={{
             opacity: 0,
@@ -202,30 +216,74 @@ const scaleX = useSpring(
           transition={{
             duration: 1,
           }}
-          className="flex flex-col items-center gap-8"
+          className="relative flex flex-col items-center gap-10"
         >
-    <motion.img
-  src="/shih-tzu.gif"
-  alt="Loading Dog"
-  animate={{
-    x: [0, 40, 0],
-  }}
-  transition={{
-    duration: 1.2,
-    repeat: Infinity,
-    ease: "easeInOut",
-  }}
-  className="w-40 h-40 object-contain"
-  style={{ imageRendering: "pixelated" }}
-/>
+          {/* OUTER RING */}
+          <motion.div
+            animate={{
+              rotate: 360,
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute w-40 h-40 rounded-full border border-cyan-400/20"
+          />
   
-          <h1 className="text-white text-2xl font-bold tracking-[0.4em]">
-            MARK ANGELO
-          </h1>
+          {/* MIDDLE RING */}
+          <motion.div
+            animate={{
+              rotate: -360,
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute w-28 h-28 rounded-full border-t-2 border-cyan-300 border-r-2 border-r-cyan-500/40"
+          />
+  
+          {/* CENTER GLOW */}
+          <motion.div
+            animate={{
+              scale: [1, 1.4, 1],
+              opacity: [0.6, 1, 0.6],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="relative w-8 h-8 rounded-full bg-cyan-300 shadow-[0_0_45px_#22d3ee]"
+          >
+            <div className="absolute inset-0 rounded-full bg-cyan-400 blur-xl opacity-80" />
+          </motion.div>
+  
+          {/* TEXT */}
+          <motion.div
+            animate={{
+              opacity: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+            }}
+            className="mt-44 text-center"
+          >
+            <h1 className="text-white text-2xl md:text-3xl font-black tracking-[0.4em]">
+              MARK ANGELO
+            </h1>
+  
+            <p className="text-cyan-300/70 text-xs tracking-[0.3em] mt-4 uppercase">
+              Loading Experience
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     );
   }
+  
 
   return (
     <div
