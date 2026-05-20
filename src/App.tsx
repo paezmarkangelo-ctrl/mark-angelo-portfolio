@@ -204,23 +204,20 @@ const scaleX = useSpring(
           }}
           className="flex flex-col items-center gap-8"
         >
-          <div className="relative">
-            <motion.div
-              animate={{
-                rotate: 360,
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="w-24 h-24 rounded-full border-t-2 border-cyan-300 border-white/10"
-            />
-  
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-3 h-3 rounded-full bg-cyan-300 shadow-[0_0_25px_#22d3ee]" />
-            </div>
-          </div>
+        <motion.img
+  src="https://media.tenor.com/6ZQJY9nP5JAAAAAi/dog-running.gif"
+  alt="Loading Dog"
+  animate={{
+    x: [0, 40, 0],
+  }}
+  transition={{
+    duration: 1.2,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="w-32 h-32 object-contain"
+  style={{ imageRendering: "pixelated" }}
+/>
   
           <h1 className="text-white text-2xl font-bold tracking-[0.4em]">
             MARK ANGELO
@@ -296,37 +293,31 @@ const scaleX = useSpring(
           }}
           className="absolute bottom-[-10%] right-[-10%] w-[700px] h-[700px] bg-blue-500/10 blur-[160px] rounded-full"
         />
-          {[...Array(25)].map((_, i) => (
-    <motion.div
-      key={i}
-      className="absolute w-1 h-1 bg-cyan-300/30 rounded-full"
-      initial={{
-        x:
-          Math.random() *
-          window.innerWidth,
-        y:
-          Math.random() *
-          window.innerHeight,
-        opacity: Math.random(),
-      }}
-      animate={{
-        y: [
-          Math.random() *
-            window.innerHeight,
-          -100,
-        ],
-        opacity: [0, 1, 0],
-      }}
-      transition={{
-        duration:
-          8 + Math.random() * 10,
-        repeat: Infinity,
-        delay: Math.random() * 5,
-      }}
-    />
-  ))}
-      </div>
-
+         {[...Array(25)].map((_, i) => (
+  <motion.div
+    key={i}
+    className="absolute w-1 h-1 bg-cyan-300/30 rounded-full"
+    initial={{
+      x: Math.random() * 1200,
+      y: Math.random() * 800,
+      opacity: Math.random(),
+    }}
+    animate={{
+      y: [
+        Math.random() * 800,
+        -100,
+      ],
+      opacity: [0, 1, 0],
+    }}
+    transition={{
+      duration:
+        8 + Math.random() * 10,
+      repeat: Infinity,
+      delay: Math.random() * 5,
+    }}
+  />
+))}
+</div>
       {/* NAVBAR */}
       <motion.nav
         initial={{ opacity: 0, y: -30 }}
@@ -590,29 +581,7 @@ const scaleX = useSpring(
         Watch My Work
       </motion.button>
     </div>
-
-    <motion.div
-      animate={{
-        y: [0, -15, 0],
-      }}
-      transition={{
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      className="mt-20 relative w-fit"
-    >
-      <div className="absolute inset-0 bg-cyan-400/20 blur-3xl rounded-[3rem]" />
-
-      <div className="relative max-w-md rounded-[3rem] overflow-hidden border border-white/10 backdrop-blur-2xl">
-        <img
-          src="/514409603_24309614505317699_4619182895946011206_n.jpg"
-          alt="Mark Angelo"
-          className="w-full h-[500px] object-cover"
-        />
-      </div>
     </motion.div>
-  </motion.div>
 </motion.section>
 
       {/* PROJECTS */}
@@ -1048,7 +1017,7 @@ const scaleX = useSpring(
     setIsSending(false);
     setIsSent(true);
 
-    const form = e.target as HTMLFormElement;
+    const form = e.currentTarget;
     form.reset();
 
     setTimeout(() => {
@@ -1129,7 +1098,7 @@ const scaleX = useSpring(
       </motion.div>
     </div>
   </div>
-</motion.section>
-    </div>
-  );
+  </motion.section>
+</div>
+);
 }
