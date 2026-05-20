@@ -205,7 +205,7 @@ const scaleX = useSpring(
           className="flex flex-col items-center gap-8"
         >
         <motion.img
-  src="https://media.tenor.com/6ZQJY9nP5JAAAAAi/dog-running.gif"
+  src="https://media.tenor.com/tvFWFDXRrmMAAAAi/blink-dog.gif"
   alt="Loading Dog"
   animate={{
     x: [0, 40, 0],
