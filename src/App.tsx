@@ -233,7 +233,12 @@ const scaleX = useSpring(
   return (
     <div
       className={`min-h-screen overflow-x-hidden transition-colors duration-700 ${backgroundClass}`}
+      
     >
+      <motion.div
+  style={{ scaleX }}
+  className="fixed top-0 left-0 right-0 h-1 bg-cyan-400 origin-left z-[99999]"
+/>
       {/* CURSOR GLOW */}
       <motion.div
         className="hidden md:block fixed top-0 left-0 w-64 h-64 rounded-full bg-cyan-400/10 blur-3xl pointer-events-none z-[9998]"
@@ -657,7 +662,7 @@ const scaleX = useSpring(
                 y: -12,
                 scale: 1.02,
               }}
-              className="group relative"
+              className="group relative will-change-transform"
             >
               <div className="absolute inset-0 bg-cyan-500/0 group-hover:bg-cyan-500/10 blur-3xl transition-all duration-500 rounded-[3rem]" />
 
