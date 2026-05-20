@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function PortfolioWebsite() {
+  const [isSending, setIsSending] = useState(false);
+  const [isSent, setIsSent] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
 
   const [mousePosition, setMousePosition] = useState({
@@ -742,9 +744,24 @@ export default function PortfolioWebsite() {
 
           <form
   className="space-y-6"
-  onSubmit={(e) => {
+  onSubmit={async (e) => {
     e.preventDefault();
-    alert("Message sent successfully!");
+
+    setIsSending(true);
+
+    await new Promise((resolve) =>
+      setTimeout(resolve, 2000)
+    );
+
+    setIsSending(false);
+    setIsSent(true);
+
+    const form = e.target as HTMLFormElement;
+    form.reset();
+
+    setTimeout(() => {
+      setIsSent(false);
+    }, 2500);
   }}
 >
             <input
@@ -791,16 +808,30 @@ export default function PortfolioWebsite() {
               }`}
             />
 
-            <motion.button
-              whileHover={{
-                scale: 1.03,
-                y: -2,
-              }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full rounded-2xl py-5 font-semibold bg-cyan-400 text-black hover:bg-cyan-300 transition-all duration-500 shadow-[0_0_40px_rgba(34,211,238,0.35)]"
-            >
-              Send Message
-            </motion.button>
+<motion.button
+  whileHover={{
+    scale: 1.03,
+    y: -2,
+  }}
+  whileTap={{ scale: 0.98 }}
+  type="submit"
+  disabled={isSending}
+  className="w-full rounded-2xl py-5 font-semibold bg-cyan-400 text-black hover:bg-cyan-300 transition-all duration-500 shadow-[0_0_40px_rgba(34,211,238,0.35)] flex items-center justify-center gap-3"
+>
+  {isSending ? (
+    <>
+      <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+      Sending...
+    </>
+  ) : isSent ? (
+    <>
+      <span className="text-xl">✓</span>
+      Message Sent
+    </>
+  ) : (
+    "Send Message"
+  )}
+</motion.button>
           </form>
         </div>
       </motion.div>
