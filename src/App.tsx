@@ -686,6 +686,8 @@ const scaleX = useSpring(
       "CSS3",
       "GitHub",
       "UI/UX Design",
+      "Capcut",
+      "Canva",
     ].map((tech, index) => (
       <motion.div
         key={tech}
