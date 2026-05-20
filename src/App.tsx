@@ -677,6 +677,7 @@ export default function PortfolioWebsite() {
                 opacity: 1,
                 y: 0,
                 scale: 1,
+                filter: "blur(0px)",
               }}
               transition={{
                 delay: index * 0.1,
