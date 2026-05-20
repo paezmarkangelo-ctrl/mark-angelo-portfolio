@@ -2,6 +2,7 @@ import {
   motion,
   useScroll,
   useTransform,
+  useSpring,
 } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -20,6 +21,17 @@ export default function PortfolioWebsite() {
     y: 0,
   });
   const { scrollY } = useScroll();
+
+  const { scrollYProgress } =
+  useScroll();
+
+const scaleX = useSpring(
+  scrollYProgress,
+  {
+    stiffness: 100,
+    damping: 30,
+  }
+);
 
   const heroY = useTransform(
   scrollY,
@@ -462,6 +474,40 @@ export default function PortfolioWebsite() {
 </div>
 </motion.nav>
 
+
+{mobileMenu && (
+  <motion.div
+    initial={{
+      opacity: 0,
+      y: -20,
+    }}
+    animate={{
+      opacity: 1,
+      y: 0,
+    }}
+    className="fixed top-24 left-6 right-6 z-40 rounded-3xl border border-white/10 bg-black/80 backdrop-blur-2xl p-6 flex flex-col gap-4"
+  >
+    {[
+      "home",
+      "projects",
+      "services",
+      "about",
+      "contact",
+    ].map((item) => (
+      <a
+        key={item}
+        href={`#${item}`}
+        onClick={() =>
+          setMobileMenu(false)
+        }
+        className="text-white text-lg capitalize"
+      >
+        {item}
+      </a>
+    ))}
+  </motion.div>
+)}
+
      {/* HERO */}
 <motion.section
   id="home"
@@ -510,6 +556,12 @@ export default function PortfolioWebsite() {
           </p>
 
           <div className="flex flex-wrap gap-5">
+  buttons...
+</div>
+
+<motion.div>
+  image...
+</motion.div>
             <motion.button
              whileHover={{
               scale: 1.08,
@@ -529,8 +581,15 @@ export default function PortfolioWebsite() {
 
             <motion.button
               whileHover={{
-                scale: 1.05,
-                y: -3,
+                scale: 1.08,
+                y: -5,
+              }}
+              whileTap={{
+                scale: 0.96,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
               }}
               className="px-8 py-4 rounded-full border border-white/10 hover:bg-white/10"
             >
@@ -599,6 +658,7 @@ export default function PortfolioWebsite() {
                 opacity: 1,
                 y: 0,
                 scale: 1,
+                filter: "blur(0px)",
               }}
               transition={{
                 delay: index * 0.15,
