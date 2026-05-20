@@ -60,6 +60,7 @@ export default function PortfolioWebsite() {
   
   useEffect(() => {
     const sections = [
+      "home",
       "projects",
       "services",
       "about",
@@ -339,28 +340,33 @@ export default function PortfolioWebsite() {
 
         {/* RIGHT */}
 <div className="hidden md:flex items-center gap-3">
-  {[
-    {
-      label: "Projects",
-      href: "#projects",
-      id: "projects",
-    },
-    {
-      label: "Services",
-      href: "#services",
-      id: "services",
-    },
-    {
-      label: "About",
-      href: "#about",
-      id: "about",
-    },
-    {
-      label: "Contact",
-      href: "#contact",
-      id: "contact",
-    },
-  ].map((item) => (
+{[
+  {
+    label: "Home",
+    href: "#home",
+    id: "home",
+  },
+  {
+    label: "Projects",
+    href: "#projects",
+    id: "projects",
+  },
+  {
+    label: "Services",
+    href: "#services",
+    id: "services",
+  },
+  {
+    label: "About",
+    href: "#about",
+    id: "about",
+  },
+  {
+    label: "Contact",
+    href: "#contact",
+    id: "contact",
+  },
+].map((item) => (
     <motion.a
       key={item.label}
       href={item.href}
@@ -456,8 +462,9 @@ export default function PortfolioWebsite() {
 </div>
 </motion.nav>
 
-      {/* HERO */}
-      <motion.section
+     {/* HERO */}
+<motion.section
+  id="home"
         initial={{
           opacity: 0,
           y: 40,
@@ -529,6 +536,32 @@ export default function PortfolioWebsite() {
             >
               Watch My Work
             </motion.button>
+
+
+            <motion.div
+  animate={{
+    y: [0, -15, 0],
+  }}
+  transition={{
+    duration: 6,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="mt-20 relative"
+>
+  <div className="absolute inset-0 bg-cyan-400/20 blur-3xl rounded-[3rem]" />
+
+  <div className="relative max-w-md rounded-[3rem] overflow-hidden border border-white/10 backdrop-blur-2xl">
+    <img
+      src="/514409603_24309614505317699_4619182895946011206_n.jpg"
+      alt="Mark Angelo"
+      className="w-full h-[500px] object-cover"
+    />
+  </div>
+</motion.div>
+
+
+
           </div>
         </motion.div>
       </motion.section>
@@ -560,6 +593,7 @@ export default function PortfolioWebsite() {
                 opacity: 0,
                 y: 80,
                 scale: 0.9,
+                filter: "blur(12px)",
               }}
               whileInView={{
                 opacity: 1,
