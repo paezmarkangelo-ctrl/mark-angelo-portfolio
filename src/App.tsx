@@ -555,13 +555,6 @@ const scaleX = useSpring(
             and immersive digital experiences.
           </p>
 
-          <div className="flex flex-wrap gap-5">
-  buttons...
-</div>
-
-<motion.div>
-  image...
-</motion.div>
             <motion.button
              whileHover={{
               scale: 1.08,
@@ -620,8 +613,6 @@ const scaleX = useSpring(
 </motion.div>
 
 
-
-          </div>
         </motion.div>
       </motion.section>
 
