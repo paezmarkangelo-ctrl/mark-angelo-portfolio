@@ -511,110 +511,104 @@ const scaleX = useSpring(
      {/* HERO */}
 <motion.section
   id="home"
-        initial={{
-          opacity: 0,
-          y: 40,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{
-          duration: 1.2,
-        }}
-        className="relative max-w-7xl mx-auto px-6 pt-48 pb-32"
-      >
-        <motion.div
-         style={{
-          y: heroY,
-        }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <p className="uppercase tracking-[0.35em] text-cyan-300 text-xs md:text-sm mb-6">
-            ServiceNow Developer • Video Editor
-          </p>
-
-          <h1 className="text-5xl sm:text-6xl md:text-8xl font-black leading-[0.95] mb-8">
-            Building
-            <br />
-            Cinematic
-            <br />
-            Digital
-            <br />
-            Experiences
-          </h1>
-
-          <p
-            className={`text-lg md:text-xl leading-relaxed max-w-2xl mb-10 ${mutedText}`}
-          >
-            Premium workflow automation, cinematic editing, modern UI systems,
-            and immersive digital experiences.
-          </p>
-
-            <motion.button
-             whileHover={{
-              scale: 1.08,
-              y: -5,
-            }}
-            whileTap={{
-              scale: 0.96,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-            }}
-              className="px-8 py-4 rounded-full bg-white text-black font-semibold"
-            >
-              View Projects
-            </motion.button>
-
-            <motion.button
-              whileHover={{
-                scale: 1.08,
-                y: -5,
-              }}
-              whileTap={{
-                scale: 0.96,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-              }}
-              className="px-8 py-4 rounded-full border border-white/10 hover:bg-white/10"
-            >
-              Watch My Work
-            </motion.button>
-
-
-            <motion.div
+  initial={{
+    opacity: 0,
+    y: 40,
+  }}
   animate={{
-    y: [0, -15, 0],
+    opacity: 1,
+    y: 0,
   }}
   transition={{
-    duration: 6,
-    repeat: Infinity,
-    ease: "easeInOut",
+    duration: 1.2,
   }}
-  className="mt-20 relative"
+  className="relative max-w-7xl mx-auto px-6 pt-48 pb-32"
 >
-  <div className="absolute inset-0 bg-cyan-400/20 blur-3xl rounded-[3rem]" />
+  <motion.div
+    style={{
+      y: heroY,
+    }}
+  >
+    <p className="uppercase tracking-[0.35em] text-cyan-300 text-xs md:text-sm mb-6">
+      ServiceNow Developer • Video Editor
+    </p>
 
-  <div className="relative max-w-md rounded-[3rem] overflow-hidden border border-white/10 backdrop-blur-2xl">
-    <img
-      src="/514409603_24309614505317699_4619182895946011206_n.jpg"
-      alt="Mark Angelo"
-      className="w-full h-[500px] object-cover"
-    />
-  </div>
-</motion.div>
+    <h1 className="text-5xl sm:text-6xl md:text-8xl font-black leading-[0.95] mb-8">
+      Building
+      <br />
+      Cinematic
+      <br />
+      Digital
+      <br />
+      Experiences
+    </h1>
 
+    <p
+      className={`text-lg md:text-xl leading-relaxed max-w-2xl mb-10 ${mutedText}`}
+    >
+      Premium workflow automation, cinematic editing, modern UI systems,
+      and immersive digital experiences.
+    </p>
 
-        </motion.div>
-      </motion.section>
+    <div className="flex flex-wrap gap-5 items-center">
+      <motion.button
+        whileHover={{
+          scale: 1.08,
+          y: -5,
+        }}
+        whileTap={{
+          scale: 0.96,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+        }}
+        className="px-8 py-4 rounded-full bg-white text-black font-semibold h-auto"
+      >
+        View Projects
+      </motion.button>
+
+      <motion.button
+        whileHover={{
+          scale: 1.08,
+          y: -5,
+        }}
+        whileTap={{
+          scale: 0.96,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+        }}
+        className="px-8 py-4 rounded-full border border-white/10 hover:bg-white/10 h-auto"
+      >
+        Watch My Work
+      </motion.button>
+    </div>
+
+    <motion.div
+      animate={{
+        y: [0, -15, 0],
+      }}
+      transition={{
+        duration: 6,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="mt-20 relative w-fit"
+    >
+      <div className="absolute inset-0 bg-cyan-400/20 blur-3xl rounded-[3rem]" />
+
+      <div className="relative max-w-md rounded-[3rem] overflow-hidden border border-white/10 backdrop-blur-2xl">
+        <img
+          src="/514409603_24309614505317699_4619182895946011206_n.jpg"
+          alt="Mark Angelo"
+          className="w-full h-[500px] object-cover"
+        />
+      </div>
+    </motion.div>
+  </motion.div>
+</motion.section>
 
       {/* PROJECTS */}
       <motion.section
@@ -650,6 +644,9 @@ const scaleX = useSpring(
                 y: 0,
                 scale: 1,
                 filter: "blur(0px)",
+                transitionEnd: {
+                  filter: "none",
+                },
               }}
               transition={{
                 delay: index * 0.15,
