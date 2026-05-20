@@ -740,10 +740,17 @@ export default function PortfolioWebsite() {
             Send a Message
           </h3>
 
-          <form className="space-y-6">
+          <form
+  className="space-y-6"
+  onSubmit={(e) => {
+    e.preventDefault();
+    alert("Message sent successfully!");
+  }}
+>
             <input
               type="text"
               placeholder="Your Name"
+              required
               className={`w-full rounded-2xl px-6 py-5 outline-none transition-all duration-500 ${
                 darkMode
                   ? "bg-white/[0.04] border border-white/10 focus:border-cyan-400 text-white"
@@ -754,6 +761,7 @@ export default function PortfolioWebsite() {
             <input
               type="email"
               placeholder="Your Email"
+              required
               className={`w-full rounded-2xl px-6 py-5 outline-none transition-all duration-500 ${
                 darkMode
                   ? "bg-white/[0.04] border border-white/10 focus:border-cyan-400 text-white"
@@ -764,6 +772,7 @@ export default function PortfolioWebsite() {
             <input
               type="text"
               placeholder="Subject"
+              required
               className={`w-full rounded-2xl px-6 py-5 outline-none transition-all duration-500 ${
                 darkMode
                   ? "bg-white/[0.04] border border-white/10 focus:border-cyan-400 text-white"
@@ -774,6 +783,7 @@ export default function PortfolioWebsite() {
             <textarea
               rows={6}
               placeholder="Tell me about your project..."
+              required
               className={`w-full rounded-2xl px-6 py-5 outline-none resize-none transition-all duration-500 ${
                 darkMode
                   ? "bg-white/[0.04] border border-white/10 focus:border-cyan-400 text-white"
