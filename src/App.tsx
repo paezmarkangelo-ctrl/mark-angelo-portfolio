@@ -1,28 +1,105 @@
-import { motion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function PortfolioWebsite() {
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [activeSection, setActiveSection] =
+  useState("projects");
+  const [mobileMenu, setMobileMenu] =
+  useState(false);
 
   const [mousePosition, setMousePosition] = useState({
     x: 0,
     y: 0,
   });
+  const { scrollY } = useScroll();
+
+  const heroY = useTransform(
+  scrollY,
+  [0, 500],
+  [0, 120]
+  );
 
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
+    const updateMousePosition = (
+      e: MouseEvent
+    ) => {
       setMousePosition({
         x: e.clientX,
         y: e.clientY,
       });
     };
-
-    window.addEventListener("mousemove", updateMousePosition);
-
+  
+    window.addEventListener(
+      "mousemove",
+      updateMousePosition
+    );
+  
     return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
+      window.removeEventListener(
+        "mousemove",
+        updateMousePosition
+      );
+    };
+  }, []);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+  
+    return () => clearTimeout(timer);
+  }, []);
+  
+  useEffect(() => {
+    const sections = [
+      "projects",
+      "services",
+      "about",
+      "contact",
+    ];
+  
+    const handleScroll = () => {
+      const scrollPosition =
+        window.scrollY + 200;
+  
+      sections.forEach((section) => {
+        const element =
+          document.getElementById(section);
+  
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const height =
+            element.offsetHeight;
+  
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition <
+              offsetTop + height
+          ) {
+            setActiveSection(section);
+          }
+        }
+      });
+    };
+  
+    window.addEventListener(
+      "scroll",
+      handleScroll
+    );
+  
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
     };
   }, []);
 
@@ -97,6 +174,49 @@ export default function PortfolioWebsite() {
     },
   ];
 
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-black flex items-center justify-center z-[99999]">
+        <motion.div
+          initial={{
+            opacity: 0,
+            scale: 0.8,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{
+            duration: 1,
+          }}
+          className="flex flex-col items-center gap-8"
+        >
+          <div className="relative">
+            <motion.div
+              animate={{
+                rotate: 360,
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="w-24 h-24 rounded-full border-t-2 border-cyan-300 border-white/10"
+            />
+  
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-3 h-3 rounded-full bg-cyan-300 shadow-[0_0_25px_#22d3ee]" />
+            </div>
+          </div>
+  
+          <h1 className="text-white text-2xl font-bold tracking-[0.4em]">
+            MARK ANGELO
+          </h1>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`min-h-screen overflow-x-hidden transition-colors duration-700 ${backgroundClass}`}
@@ -158,6 +278,35 @@ export default function PortfolioWebsite() {
           }}
           className="absolute bottom-[-10%] right-[-10%] w-[700px] h-[700px] bg-blue-500/10 blur-[160px] rounded-full"
         />
+          {[...Array(25)].map((_, i) => (
+    <motion.div
+      key={i}
+      className="absolute w-1 h-1 bg-cyan-300/30 rounded-full"
+      initial={{
+        x:
+          Math.random() *
+          window.innerWidth,
+        y:
+          Math.random() *
+          window.innerHeight,
+        opacity: Math.random(),
+      }}
+      animate={{
+        y: [
+          Math.random() *
+            window.innerHeight,
+          -100,
+        ],
+        opacity: [0, 1, 0],
+      }}
+      transition={{
+        duration:
+          8 + Math.random() * 10,
+        repeat: Infinity,
+        delay: Math.random() * 5,
+      }}
+    />
+  ))}
       </div>
 
       {/* NAVBAR */}
@@ -188,76 +337,124 @@ export default function PortfolioWebsite() {
               </span>
             </div>
 
-            {/* RIGHT */}
-            <div className="hidden md:flex items-center gap-3">
-              {[
-                { label: "Projects", href: "#projects" },
-                { label: "Services", href: "#services" },
-                { label: "About", href: "#about" },
-                { label: "Contact", href: "#contact" },
-              ].map((item) => (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  whileHover={{
-                    scale: 1.05,
-                  }}
-                  className={`group relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 overflow-hidden ${navText}`}
-                >
-                  <div className="absolute inset-0 rounded-full bg-cyan-400/10 opacity-0 group-hover:opacity-100 blur-xl transition duration-300" />
+        {/* RIGHT */}
+<div className="hidden md:flex items-center gap-3">
+  {[
+    {
+      label: "Projects",
+      href: "#projects",
+      id: "projects",
+    },
+    {
+      label: "Services",
+      href: "#services",
+      id: "services",
+    },
+    {
+      label: "About",
+      href: "#about",
+      id: "about",
+    },
+    {
+      label: "Contact",
+      href: "#contact",
+      id: "contact",
+    },
+  ].map((item) => (
+    <motion.a
+      key={item.label}
+      href={item.href}
+      whileHover={{
+        scale: 1.08,
+        y: -5,
+      }}
+      whileTap={{
+        scale: 0.96,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+      }}
+      className={`group relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 overflow-hidden ${
+        activeSection === item.id
+          ? "text-cyan-300"
+          : navText
+      }`}
+    >
+      <div
+        className={`absolute inset-0 rounded-full blur-xl transition duration-300 ${
+          activeSection === item.id
+            ? "bg-cyan-400/20 opacity-100"
+            : "bg-cyan-400/10 opacity-0 group-hover:opacity-100"
+        }`}
+      />
 
-                  <span className="relative z-10">{item.label}</span>
-                </motion.a>
-              ))}
+      <span className="relative z-10">
+        {item.label}
+      </span>
+    </motion.a>
+  ))}
 
-              {/* TOGGLE */}
-              <motion.button
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setDarkMode(!darkMode)}
-                className={`relative w-[74px] h-[38px] rounded-full border transition-all duration-500 overflow-hidden ${
-                  darkMode
-                    ? "bg-[#0f172a] border-white/10"
-                    : "bg-white border-black/20"
-                }`}
-              >
-                <motion.div
-                  animate={{
-                    x: darkMode ? 38 : 2,
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 260,
-                    damping: 20,
-                  }}
-                  className={`absolute top-[2px] w-[32px] h-[32px] rounded-full flex items-center justify-center shadow-lg ${
-                    darkMode ? "bg-[#111827]" : "bg-[#0f172a]"
-                  }`}
-                >
-                  {darkMode ? (
-                    <div className="relative w-4 h-4 rounded-full bg-yellow-300">
-                      <div className="absolute top-0 left-[6px] w-4 h-4 rounded-full bg-[#111827]" />
-                    </div>
-                  ) : (
-                    <div className="relative flex items-center justify-center w-5 h-5">
-                      <div className="absolute w-3 h-3 rounded-full bg-yellow-400" />
-
-                      {[...Array(8)].map((_, i) => (
-                        <div
-                          key={i}
-                          className="absolute w-[2px] h-[6px] bg-yellow-400 rounded-full"
-                          style={{
-                            transform: `rotate(${i * 45}deg) translateY(-8px)`,
-                          }}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </motion.div>
-              </motion.button>
-            </div>
-          </div>
+  {/* TOGGLE */}
+  <motion.button
+    whileTap={{ scale: 0.95 }}
+    onClick={() => setDarkMode(!darkMode)}
+    className={`relative w-[74px] h-[38px] rounded-full border transition-all duration-500 overflow-hidden ${
+      darkMode
+        ? "bg-[#0f172a] border-white/10"
+        : "bg-white border-black/20"
+    }`}
+  >
+    <motion.div
+      animate={{
+        x: darkMode ? 38 : 2,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      }}
+      className={`absolute top-[2px] w-[32px] h-[32px] rounded-full flex items-center justify-center shadow-lg ${
+        darkMode ? "bg-[#111827]" : "bg-[#0f172a]"
+      }`}
+    >
+      {darkMode ? (
+        <div className="relative w-4 h-4 rounded-full bg-yellow-300">
+          <div className="absolute top-0 left-[6px] w-4 h-4 rounded-full bg-[#111827]" />
         </div>
-      </motion.nav>
+      ) : (
+        <div className="relative flex items-center justify-center w-5 h-5">
+          <div className="absolute w-3 h-3 rounded-full bg-yellow-400" />
+
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-[2px] h-[6px] bg-yellow-400 rounded-full"
+              style={{
+                transform: `rotate(${i * 45}deg) translateY(-8px)`,
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </motion.div>
+  </motion.button>
+</div>
+
+{/* MOBILE MENU BUTTON */}
+<div className="md:hidden">
+  <button
+    className="text-white text-2xl"
+    onClick={() =>
+      setMobileMenu(!mobileMenu)
+    }
+  >
+    ☰
+  </button>
+</div>
+</div>
+</div>
+</motion.nav>
 
       {/* HERO */}
       <motion.section
@@ -275,9 +472,9 @@ export default function PortfolioWebsite() {
         className="relative max-w-7xl mx-auto px-6 pt-48 pb-32"
       >
         <motion.div
-          animate={{
-            y: [0, -10, 0],
-          }}
+         style={{
+          y: heroY,
+        }}
           transition={{
             duration: 6,
             repeat: Infinity,
@@ -307,10 +504,17 @@ export default function PortfolioWebsite() {
 
           <div className="flex flex-wrap gap-5">
             <motion.button
-              whileHover={{
-                scale: 1.05,
-                y: -3,
-              }}
+             whileHover={{
+              scale: 1.08,
+              y: -5,
+            }}
+            whileTap={{
+              scale: 0.96,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+            }}
               className="px-8 py-4 rounded-full bg-white text-black font-semibold"
             >
               View Projects
