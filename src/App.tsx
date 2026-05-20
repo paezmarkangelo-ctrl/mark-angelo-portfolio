@@ -584,70 +584,219 @@ export default function PortfolioWebsite() {
 
       {/* CONTACT */}
       <motion.section
-        id="contact"
-        variants={premiumReveal}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="max-w-7xl mx-auto px-6 py-32"
+  id="contact"
+  variants={premiumReveal}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  className="relative overflow-hidden py-32 px-6"
+>
+  {/* BACKGROUND GRID */}
+  <div
+    className={`absolute inset-0 ${
+      darkMode
+        ? "bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)]"
+        : "bg-[linear-gradient(rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.04)_1px,transparent_1px)]"
+    } bg-[size:70px_70px]`}
+  />
+
+  {/* GLOW ORBS */}
+  <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/20 blur-[120px] rounded-full" />
+  <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/20 blur-[140px] rounded-full" />
+
+  <div className="relative z-10 max-w-7xl mx-auto">
+    {/* TITLE */}
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="text-center mb-24"
+    >
+      <p
+        className={`uppercase tracking-[0.4em] text-xs mb-6 ${
+          darkMode ? "text-cyan-300" : "text-cyan-700"
+        }`}
       >
-        <div
-          className={`${cardClass} relative overflow-hidden rounded-[3rem] border backdrop-blur-2xl p-10 md:p-20 text-center`}
+        Contact
+      </p>
+
+      <h2 className="text-5xl md:text-7xl font-black leading-[0.95]">
+        Let’s Build
+        <br />
+        Something Amazing
+      </h2>
+    </motion.div>
+
+    {/* CONTENT */}
+    <div className="grid lg:grid-cols-2 gap-16 items-start">
+      {/* LEFT */}
+      <motion.div
+        initial={{ opacity: 0, x: -60 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+        className="space-y-10"
+      >
+        <div>
+          <h3 className="text-3xl font-bold mb-6">
+            Let’s Connect
+          </h3>
+
+          <p
+            className={`text-lg leading-relaxed ${
+              darkMode ? "text-white/60" : "text-black/60"
+            }`}
+          >
+            Available for ServiceNow development,
+            workflow automation, UI design,
+            and cinematic editing projects.
+          </p>
+        </div>
+
+        {/* EMAIL CARD */}
+        <motion.div
+          whileHover={{
+            scale: 1.03,
+            y: -6,
+          }}
+          className={`group relative overflow-hidden rounded-[2rem] border p-8 backdrop-blur-xl transition-all duration-500 ${
+            darkMode
+              ? "bg-white/[0.03] border-white/10"
+              : "bg-black/[0.03] border-black/10"
+          }`}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10" />
+          <div className="absolute inset-0 bg-cyan-500/0 group-hover:bg-cyan-500/10 transition-all duration-500" />
 
-          <div className="relative">
-            <p
-              className={`uppercase tracking-[0.35em] text-xs md:text-sm mb-6 ${mutedText}`}
+          <div className="relative z-10">
+            <p className="text-sm uppercase tracking-[0.3em] text-cyan-400 mb-4">
+              Email
+            </p>
+
+            <a
+              href="mailto:paezmarkangelo@gmail.com"
+              className="text-2xl font-semibold break-all hover:text-cyan-400 transition-all"
             >
-              Contact
-            </p>
+              paezmarkangelo@gmail.com
+            </a>
+          </div>
+        </motion.div>
 
-            <h2 className="text-4xl md:text-7xl font-black leading-tight mb-8">
-              Let’s Build
-              <br />
-              Something Incredible
-            </h2>
+        {/* SOCIALS */}
+        <div>
+          <p className="text-sm uppercase tracking-[0.3em] text-cyan-400 mb-6">
+            Connect With Me
+          </p>
 
-            <p className={`${mutedText} text-lg max-w-2xl mx-auto mb-12`}>
-              Available for ServiceNow development, workflow automation, and
-              cinematic editing.
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-5">
-              <motion.button
+          <div className="flex gap-5">
+            {[
+              {
+                label: "GitHub",
+                href: "https://github.com/paezmarkangelo-ctrl",
+              },
+              {
+                label: "LinkedIn",
+                href: "https://linkedin.com",
+              },
+              {
+                label: "TikTok",
+                href: "https://tiktok.com",
+              },
+            ].map((social) => (
+              <motion.a
+                key={social.label}
+                href={social.href}
+                target="_blank"
                 whileHover={{
+                  y: -8,
                   scale: 1.05,
-                  y: -3,
                 }}
-                className="px-8 py-4 rounded-full bg-white text-black font-semibold"
+                className={`px-6 py-4 rounded-2xl border transition-all duration-500 ${
+                  darkMode
+                    ? "bg-white/[0.03] border-white/10 hover:bg-cyan-500/10"
+                    : "bg-black/[0.03] border-black/10 hover:bg-cyan-500/10"
+                }`}
               >
-                Email Me
-              </motion.button>
-
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  y: -3,
-                }}
-                className="px-8 py-4 rounded-full border border-white/10 hover:bg-white/10"
-              >
-                LinkedIn
-              </motion.button>
-
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  y: -3,
-                }}
-                className="px-8 py-4 rounded-full border border-white/10 hover:bg-white/10"
-              >
-                TikTok
-              </motion.button>
-            </div>
+                {social.label}
+              </motion.a>
+            ))}
           </div>
         </div>
-      </motion.section>
+      </motion.div>
+
+      {/* RIGHT FORM */}
+      <motion.div
+        initial={{ opacity: 0, x: 60 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+        className={`relative overflow-hidden rounded-[2.5rem] border p-10 backdrop-blur-2xl ${
+          darkMode
+            ? "bg-white/[0.04] border-white/10"
+            : "bg-white/70 border-black/10"
+        }`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-purple-500/10" />
+
+        <div className="relative z-10">
+          <h3 className="text-3xl font-bold mb-10">
+            Send a Message
+          </h3>
+
+          <form className="space-y-6">
+            <input
+              type="text"
+              placeholder="Your Name"
+              className={`w-full rounded-2xl px-6 py-5 outline-none transition-all duration-500 ${
+                darkMode
+                  ? "bg-white/[0.04] border border-white/10 focus:border-cyan-400 text-white"
+                  : "bg-black/[0.03] border border-black/10 focus:border-cyan-600 text-black"
+              }`}
+            />
+
+            <input
+              type="email"
+              placeholder="Your Email"
+              className={`w-full rounded-2xl px-6 py-5 outline-none transition-all duration-500 ${
+                darkMode
+                  ? "bg-white/[0.04] border border-white/10 focus:border-cyan-400 text-white"
+                  : "bg-black/[0.03] border border-black/10 focus:border-cyan-600 text-black"
+              }`}
+            />
+
+            <input
+              type="text"
+              placeholder="Subject"
+              className={`w-full rounded-2xl px-6 py-5 outline-none transition-all duration-500 ${
+                darkMode
+                  ? "bg-white/[0.04] border border-white/10 focus:border-cyan-400 text-white"
+                  : "bg-black/[0.03] border border-black/10 focus:border-cyan-600 text-black"
+              }`}
+            />
+
+            <textarea
+              rows={6}
+              placeholder="Tell me about your project..."
+              className={`w-full rounded-2xl px-6 py-5 outline-none resize-none transition-all duration-500 ${
+                darkMode
+                  ? "bg-white/[0.04] border border-white/10 focus:border-cyan-400 text-white"
+                  : "bg-black/[0.03] border border-black/10 focus:border-cyan-600 text-black"
+              }`}
+            />
+
+            <motion.button
+              whileHover={{
+                scale: 1.03,
+                y: -2,
+              }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full rounded-2xl py-5 font-semibold bg-cyan-400 text-black hover:bg-cyan-300 transition-all duration-500 shadow-[0_0_40px_rgba(34,211,238,0.35)]"
+            >
+              Send Message
+            </motion.button>
+          </form>
+        </div>
+      </motion.div>
+    </div>
+  </div>
+</motion.section>
     </div>
   );
 }
