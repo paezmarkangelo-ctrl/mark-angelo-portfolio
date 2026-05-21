@@ -15,6 +15,25 @@ export default function PortfolioWebsite() {
   useState("projects");
   const [mobileMenu, setMobileMenu] =
   useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const experiences = [
+    {
+      company: "Company Name",
+      role: "ServiceNow Developer",
+      year: "2024 - Present",
+    },
+    {
+      company: "Company Name",
+      role: "Frontend Developer",
+      year: "2023 - 2024",
+    },
+    {
+      company: "Company Name",
+      role: "Video Editor",
+      year: "2022 - 2023",
+    },
+  ];
+
 
   const [mousePosition, setMousePosition] = useState({
     x: 0,
@@ -63,11 +82,25 @@ const scaleX = useSpring(
   }, []);
   
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500);
+    let progress = 0;
   
-    return () => clearTimeout(timer);
+    const interval = setInterval(() => {
+      progress += Math.floor(Math.random() * 8) + 1;
+  
+      if (progress >= 100) {
+        progress = 100;
+  
+        clearInterval(interval);
+  
+        setTimeout(() => {
+          setLoading(false);
+        }, 300);
+      }
+  
+      setLoadingProgress(progress);
+    }, 80);
+  
+    return () => clearInterval(interval);
   }, []);
   
   useEffect(() => {
@@ -197,7 +230,7 @@ const scaleX = useSpring(
             opacity: [0.2, 0.5, 0.2],
           }}
           transition={{
-            duration: 4,
+            duration: 5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -244,22 +277,66 @@ const scaleX = useSpring(
             className="absolute w-28 h-28 rounded-full border-t-2 border-cyan-300 border-r-2 border-r-cyan-500/40"
           />
   
-          {/* CENTER GLOW */}
-          <motion.div
-            animate={{
-              scale: [1, 1.4, 1],
-              opacity: [0.6, 1, 0.6],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="relative w-8 h-8 rounded-full bg-cyan-300 shadow-[0_0_45px_#22d3ee]"
-          >
-            <div className="absolute inset-0 rounded-full bg-cyan-400 blur-xl opacity-80" />
-          </motion.div>
-  
+        {/* LOGO GLOW CENTER */}
+<motion.div
+  animate={{
+    scale: [1, 1.08, 1],
+    opacity: [0.7, 1, 0.7],
+    y: [0, -4, 0],
+  }}
+  transition={{
+    duration: 3,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="relative flex items-center justify-center"
+>
+  {/* MASSIVE GLOW */}
+  <div className="absolute w-40 h-40 bg-cyan-400/20 blur-[80px] rounded-full" />
+
+  {/* ROTATING RING */}
+  <motion.div
+    animate={{
+      rotate: 360,
+    }}
+    transition={{
+      duration: 10,
+      repeat: Infinity,
+      ease: "linear",
+    }}
+    className="
+      absolute
+      w-28
+      h-28
+      rounded-full
+      border
+      border-cyan-300/20
+    "
+  />
+
+  {/* INNER GLOW */}
+  <div className="absolute w-24 h-24 bg-cyan-300/10 blur-3xl rounded-full" />
+
+   {/* LOGO */}
+   <motion.img
+    src="/logo.png"
+    alt="MP Logo"
+    animate={{
+      filter: [
+        "drop-shadow(0 0 15px #22d3ee)",
+        "drop-shadow(0 0 35px #22d3ee)",
+        "drop-shadow(0 0 15px #22d3ee)",
+      ],
+    }}
+    transition={{
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+    className="relative w-24 h-24 object-contain"
+  />
+</motion.div>
+
           {/* TEXT */}
           <motion.div
             animate={{
@@ -274,16 +351,41 @@ const scaleX = useSpring(
             <h1 className="text-white text-2xl md:text-3xl font-black tracking-[0.4em]">
               MARK ANGELO
             </h1>
-  
-            <p className="text-cyan-300/70 text-xs tracking-[0.3em] mt-4 uppercase">
-              Loading Experience
-            </p>
+
+            <div className="mt-4 flex flex-col items-center">
+              <p className="text-cyan-300/70 text-xs tracking-[0.3em] uppercase">
+                Loading Experience
+              </p>
+
+              {/* COUNTING PERCENT */}
+              <motion.p
+                key={loadingProgress}
+                initial={{ opacity: 0.4 }}
+                animate={{ opacity: 1 }}
+                className="mt-4 text-cyan-200 text-lg font-bold tracking-[0.25em]"
+              >
+                Loading... {loadingProgress}%
+              </motion.p>
+
+              {/* LOADING BAR */}
+              <div className="mt-4 w-52 h-[3px] bg-white/10 rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full bg-cyan-300 shadow-[0_0_20px_#22d3ee]"
+                  animate={{
+                    width: `${loadingProgress}%`,
+                  }}
+                  transition={{
+                    ease: "easeOut",
+                  }}
+                />
+              </div>
+            </div>
           </motion.div>
+
         </motion.div>
       </div>
     );
   }
-  
 
   return (
     <div
@@ -391,18 +493,155 @@ const scaleX = useSpring(
                 : "bg-white/70 border-black/10"
             }`}
           >
-            {/* LEFT */}
-            <div className="flex items-center gap-3">
-              <div className="relative flex items-center justify-center">
-                <div className="absolute w-8 h-8 bg-cyan-400/30 blur-xl rounded-full" />
+     {/* LEFT SIDE */}
+<div className="flex items-center gap-5">
+  
+  {/* LOGO */}
+  <motion.a
+    href="#home"
+    whileHover={{
+      scale: 1.15,
+      y: -4,
+    }}
+    whileTap={{
+      scale: 0.96,
+    }}
+    transition={{
+      type: "spring",
+      stiffness: 300,
+    }}
+    className="relative flex items-center justify-center cursor-pointer"
+  >
+    {/* MAIN GLOW */}
+    <motion.div
+      animate={{
+        opacity: [0.5, 1, 0.5],
+        scale: [1, 1.1, 1],
+      }}
+      transition={{
+        duration: 2.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="
+        absolute
+        w-32
+        h-32
+        bg-cyan-400/25
+        blur-[60px]
+        rounded-full
+      "
+    />
 
-                <div className="w-3 h-3 bg-cyan-300 rounded-full shadow-[0_0_20px_#22d3ee]" />
-              </div>
+    {/* HOVER GLOW */}
+    <motion.div
+      whileHover={{
+        scale: 1.4,
+        opacity: 1,
+      }}
+      transition={{
+        duration: 0.35,
+      }}
+      className="
+        absolute
+        w-36
+        h-36
+        bg-cyan-300/20
+        blur-[70px]
+        rounded-full
+        opacity-0
+      "
+    />
 
-              <span className="font-semibold text-sm md:text-base whitespace-nowrap">
-                Hi! I'm Mark Angelo
-              </span>
-            </div>
+    {/* LOGO */}
+    <motion.img
+      src="/logo.png"
+      alt="MP Logo"
+      whileHover={{
+        rotate: 5,
+        scale: 1.08,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+      }}
+      className="
+        relative
+        w-20
+        h-20
+        object-contain
+        drop-shadow-[0_0_45px_#22d3ee]
+      "
+    />
+  </motion.a>
+
+{/* TYPEWRITER + FLOAT + GLOW */}
+<motion.div
+  initial={{
+    opacity: 0,
+    x: -10,
+  }}
+  animate={{
+    opacity: 1,
+    x: 0,
+    y: [0, -2, 0],
+  }}
+  transition={{
+    opacity: {
+      duration: 1,
+    },
+    x: {
+      duration: 1,
+    },
+    y: {
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  }}
+  whileHover={{
+    scale: 1.03,
+  }}
+  className="flex items-center cursor-default"
+>
+  {"Hi! I'm Mark Angelo".split("").map((letter, index) => (
+    <motion.span
+      key={index}
+      initial={{
+        opacity: 0,
+        y: 12,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        delay: index * 0.045,
+        duration: 0.35,
+      }}
+      whileHover={{
+        color: "#67e8f9",
+        textShadow:
+          "0px 0px 14px rgba(34,211,238,0.9)",
+      }}
+      className="
+        text-white
+        font-semibold
+        text-lg
+        tracking-wide
+        transition-all
+        duration-300
+      "
+    >
+      {letter === " " ? "\u00A0" : letter}
+    </motion.span>
+  ))}
+</motion.div>
+
+</div>
+
+
+
 
         {/* RIGHT */}
 <div className="hidden md:flex items-center gap-3">
@@ -644,22 +883,22 @@ const scaleX = useSpring(
 
 
 
-
-        {/* TECH STACK */}
+{/* TECH STACK */}
 <motion.section
   variants={premiumReveal}
   initial="hidden"
   whileInView="visible"
   viewport={{ once: true }}
-  className="max-w-7xl mx-auto px-6 py-24"
+  className="max-w-7xl mx-auto px-6 py-32"
 >
-  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mb-16">
+  {/* HEADER */}
+  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mb-24">
     <div>
       <p className="uppercase tracking-[0.35em] text-cyan-300 text-xs md:text-sm mb-6">
         Tech Stack
       </p>
 
-      <h2 className="text-4xl md:text-6xl font-black leading-[0.95]">
+      <h2 className="text-4xl md:text-7xl font-black leading-[0.95]">
         Tools &
         <br />
         Technologies
@@ -672,76 +911,522 @@ const scaleX = useSpring(
     </p>
   </div>
 
-  <div className="flex flex-wrap gap-5">
-    {[
-      "ServiceNow",
-      "JavaScript",
-      "React",
-      "TypeScript",
-      "Flow Designer",
-      "REST APIs",
-      "Tailwind CSS",
-      "Framer Motion",
-      "HTML5",
-      "CSS3",
-      "GitHub",
-      "UI/UX Design",
-      "Capcut",
-      "Canva",
-    ].map((tech, index) => (
+  {/* CREATE SECTION */}
+  <div className="mb-24">
+    <div className="mb-10">
+      <h3 className="text-3xl md:text-4xl font-black text-white">
+        Create
+      </h3>
+
+      <div className="mt-3 w-24 h-[3px] bg-cyan-300 rounded-full shadow-[0_0_20px_#22d3ee]" />
+    </div>
+
+    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {[
+        "CapCut",
+        "Canva",
+        "UI/UX Design",
+        "Video Editing",
+        "Content Creation",
+        "Cinematic Editing",
+      ].map((tech, index) => (
+        <motion.div
+          key={tech}
+          initial={{
+            opacity: 0,
+            y: 40,
+            scale: 0.9,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
+          transition={{
+            delay: index * 0.05,
+            duration: 0.5,
+          }}
+          viewport={{ once: true }}
+          whileHover={{
+            y: -10,
+            scale: 1.03,
+          }}
+          whileTap={{
+            scale: 0.98,
+          }}
+          className={`
+            group
+            relative
+            overflow-hidden
+            rounded-[1.7rem]
+            border
+            backdrop-blur-2xl
+            p-3
+            min-h-[85px]
+            flex
+            items-center
+            justify-center
+            text-center
+            transition-all
+            duration-500
+            cursor-pointer
+            ${
+              darkMode
+                ? "bg-white/[0.03] border-white/10"
+                : "bg-black/[0.03] border-black/10"
+            }
+          `}
+        >
+          {/* MEGA GLOW */}
+          <motion.div
+            whileHover={{
+              scale: 1.25,
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.4,
+            }}
+            className="
+              absolute
+              inset-0
+              opacity-0
+              group-hover:opacity-100
+              bg-cyan-400/20
+              blur-[90px]
+              transition-all
+              duration-500
+            "
+          />
+
+ {/* ORBIT PARTICLE */}
+<motion.div
+  animate={{
+    rotate: 360,
+  }}
+  transition={{
+    duration: 8 + Math.random() * 4,
+    repeat: Infinity,
+    ease: "linear",
+  }}
+  className="
+    absolute
+    inset-0
+    flex
+    items-center
+    justify-center
+    pointer-events-none
+  "
+>
+  <div
+    className="
+      relative
+      w-full
+      h-full
+    "
+  >
+    {/* PARTICLE */}
+    <motion.div
+      animate={{
+        scale: [1, 1.4, 1],
+        opacity: [0.6, 1, 0.6],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="
+        absolute
+        top-2
+        right-6
+        w-2
+        h-2
+        rounded-full
+        bg-cyan-300
+        shadow-[0_0_25px_#22d3ee]
+      "
+    />
+  </div>
+</motion.div>
+
+          {/* TITLE */}
+          <div className="relative z-10">
+            <h4 className="text-xl font-bold">
+              {tech}
+            </h4>
+          </div>
+
+          {/* BORDER GLOW */}
+          <div className="
+            absolute
+            inset-0
+            rounded-[1.7rem]
+            border
+            border-cyan-300/0
+            group-hover:border-cyan-300/30
+            transition-all
+            duration-500
+          " />
+        </motion.div>
+      ))}
+    </div>
+  </div>
+
+  {/* DEVELOP SECTION */}
+  <div>
+    <div className="mb-10">
+      <h3 className="text-3xl md:text-4xl font-black text-white">
+        Develop
+      </h3>
+
+      <div className="mt-3 w-24 h-[3px] bg-cyan-300 rounded-full shadow-[0_0_20px_#22d3ee]" />
+    </div>
+
+    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {[
+        "ServiceNow",
+        "JavaScript",
+        "React",
+        "TypeScript",
+        "Flow Designer",
+        "REST APIs",
+        "Tailwind CSS",
+        "Framer Motion",
+        "HTML5",
+        "CSS3",
+        "GitHub",
+      ].map((tech, index) => (
+        <motion.div
+          key={tech}
+          initial={{
+            opacity: 0,
+            y: 40,
+            scale: 0.9,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
+          transition={{
+            delay: index * 0.05,
+            duration: 0.5,
+          }}
+          viewport={{ once: true }}
+          whileHover={{
+            y: -10,
+            scale: 1.03,
+          }}
+          whileTap={{
+            scale: 0.98,
+          }}
+          className={`
+            group
+            relative
+            overflow-hidden
+            rounded-[1.7rem]
+            border
+            backdrop-blur-2xl
+            p-3
+            min-h-[110px]
+            flex
+            items-center
+            justify-center
+            text-center
+            transition-all
+            duration-500
+            cursor-pointer
+            ${
+              darkMode
+                ? "bg-white/[0.03] border-white/10"
+                : "bg-black/[0.03] border-black/10"
+            }
+          `}
+        >
+          {/* MEGA GLOW */}
+          <motion.div
+            whileHover={{
+              scale: 1.25,
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.4,
+            }}
+            className="
+              absolute
+              inset-0
+              opacity-0
+              group-hover:opacity-100
+              bg-cyan-400/20
+              blur-[90px]
+              transition-all
+              duration-500
+            "
+          />
+
+       {/* ORBIT PARTICLE */}
+<motion.div
+  animate={{
+    rotate: 360,
+  }}
+  transition={{
+    duration: 8 + Math.random() * 4,
+    repeat: Infinity,
+    ease: "linear",
+  }}
+  className="
+    absolute
+    inset-0
+    flex
+    items-center
+    justify-center
+    pointer-events-none
+  "
+>
+  <div
+    className="
+      relative
+      w-full
+      h-full
+    "
+  >
+    {/* PARTICLE */}
+    <motion.div
+      animate={{
+        scale: [1, 1.4, 1],
+        opacity: [0.6, 1, 0.6],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="
+        absolute
+        top-2
+        right-6
+        w-2
+        h-2
+        rounded-full
+        bg-cyan-300
+        shadow-[0_0_25px_#22d3ee]
+      "
+    />
+  </div>
+</motion.div>
+
+          {/* TITLE */}
+          <div className="relative z-10">
+            <h4 className="text-xl font-bold">
+              {tech}
+            </h4>
+          </div>
+
+          {/* BORDER GLOW */}
+          <div className="
+            absolute
+            inset-0
+            rounded-[1.7rem]
+            border
+            border-cyan-300/0
+            group-hover:border-cyan-300/30
+            transition-all
+            duration-500
+          " />
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</motion.section>
+
+{/* EXPERIENCE */}
+<motion.section
+  variants={premiumReveal}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  className="relative max-w-7xl mx-auto px-6 py-32"
+>
+  {/* TIMELINE BEAM */}
+  <div className="absolute left-8 top-0 bottom-0 w-[2px] bg-cyan-400/10 overflow-hidden">
+    <motion.div
+      animate={{
+        y: ["-100%", "100%"],
+      }}
+      transition={{
+        duration: 3,
+        repeat: Infinity,
+        ease: "linear",
+      }}
+      className="w-full h-32 bg-cyan-300 blur-md"
+    />
+  </div>
+
+  {/* HEADER */}
+  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mb-24">
+    <div>
+      <p className="uppercase tracking-[0.35em] text-cyan-300 text-xs md:text-sm mb-6">
+        Experience
+      </p>
+
+      <h2 className="text-4xl md:text-7xl font-black leading-[0.95]">
+        Career
+        <br />
+        Journey
+      </h2>
+    </div>
+
+    <p className={`${mutedText} max-w-xl text-lg leading-relaxed`}>
+      Professional experience across development,
+      workflow automation, UI systems,
+      and digital content creation.
+    </p>
+  </div>
+
+  {/* EXPERIENCE LIST */}
+  <div className="space-y-6 relative z-10">
+    {experiences.map((exp, index) => (
       <motion.div
-        key={tech}
+        key={index}
         initial={{
           opacity: 0,
-          y: 40,
-          scale: 0.8,
+          x: index % 2 === 0 ? -80 : 80,
         }}
         whileInView={{
           opacity: 1,
-          y: 0,
-          scale: 1,
+          x: 0,
+        }}
+        animate={{
+          y: [0, -4, 0],
         }}
         transition={{
-          delay: index * 0.05,
-          duration: 0.5,
+          delay: index * 0.1,
+          duration: 0.6,
+
+          y: {
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          },
         }}
         viewport={{ once: true }}
         whileHover={{
-          scale: 1.08,
-          y: -6,
+          scale: 1.02,
+          y: -8,
+          rotateX: 4,
+          rotateY: 2,
         }}
-        className={`group relative overflow-hidden px-8 py-5 rounded-2xl border backdrop-blur-xl transition-all duration-500 cursor-pointer ${
-          darkMode
-            ? "bg-white/[0.03] border-white/10 hover:bg-cyan-500/10"
-            : "bg-black/[0.03] border-black/10 hover:bg-cyan-500/10"
-        }`}
+        className={`
+          group
+          relative
+          overflow-hidden
+          rounded-[1.5rem]
+          border
+          backdrop-blur-2xl
+          p-6
+          transition-all
+          duration-500
+          ${
+            darkMode
+              ? "bg-white/[0.03] border-white/10"
+              : "bg-black/[0.03] border-black/10"
+          }
+        `}
       >
-        {/* GLOW */}
-        <div className="absolute inset-0 bg-cyan-400/0 group-hover:bg-cyan-400/10 transition-all duration-500" />
-
-        {/* FLOATING DOT */}
+        {/* MEGA GLOW */}
         <motion.div
-          animate={{
-            y: [0, -6, 0],
+          whileHover={{
+            scale: 1.3,
+            opacity: 1,
           }}
           transition={{
-            duration: 2,
-            repeat: Infinity,
-            delay: index * 0.2,
+            duration: 0.5,
           }}
-          className="absolute top-3 right-3 w-2 h-2 rounded-full bg-cyan-300 shadow-[0_0_20px_#22d3ee]"
+          className="
+            absolute
+            inset-0
+            opacity-0
+            group-hover:opacity-100
+            bg-cyan-400/20
+            blur-[120px]
+            transition-all
+            duration-700
+          "
         />
 
-        <span className="relative z-10 font-semibold text-lg">
-          {tech}
-        </span>
+        {/* ORBIT PARTICLE */}
+        <motion.div
+          animate={{
+            rotate: 360,
+          }}
+          transition={{
+            duration: 10 + index,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="
+            absolute
+            inset-0
+            pointer-events-none
+          "
+        >
+          <div className="relative w-full h-full">
+            <div
+              className="
+                absolute
+                top-3
+                right-8
+                w-2
+                h-2
+                rounded-full
+                bg-cyan-300
+                shadow-[0_0_25px_#22d3ee]
+              "
+            />
+          </div>
+        </motion.div>
+
+        {/* CONTENT */}
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          
+          {/* LEFT */}
+          <div>
+            <h3 className="text-2xl font-bold">
+              {exp.role}
+            </h3>
+
+            <p className="text-cyan-300 mt-2">
+              {exp.company}
+            </p>
+          </div>
+
+          {/* RIGHT */}
+          <div className="flex items-center gap-4">
+            <div className="w-2 h-2 rounded-full bg-cyan-300 shadow-[0_0_20px_#22d3ee]" />
+
+            <p className={`${mutedText} text-sm tracking-[0.25em] uppercase`}>
+              {exp.year}
+            </p>
+          </div>
+        </div>
+
+        {/* BORDER GLOW */}
+        <div
+          className="
+            absolute
+            inset-0
+            rounded-[1.5rem]
+            border
+            border-cyan-300/0
+            group-hover:border-cyan-300/20
+            transition-all
+            duration-500
+          "
+        />
       </motion.div>
     ))}
   </div>
 </motion.section>
-
-
-
 
 
       {/* PROJECTS */}
